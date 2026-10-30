@@ -4,20 +4,20 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Galaxy Engine | Documentación Oficial y Sitio de Galaxy Byte Studios</title>
+    <title>Galaxy Engine | Motor para Videojuegos por Galaxy Byte Studios</title>
     <style>
         :root {
-            --bg-deep: #05070f;
-            --bg-card: #0b101f;
-            --bg-card-hover: #131b33;
+            --bg-deep: #030611;
+            --bg-card: #0a0f24;
+            --bg-card-hover: #121a38;
+            --accent-neon: #00f0ff;
             --accent-blue: #478cbf;
-            --accent-glow: #6366f1;
-            --text-main: #f1f5f9;
+            --accent-purple: #8b5cf6;
+            --text-main: #f8fafc;
             --text-muted: #94a3b8;
             --border-color: #1e293b;
         }
 
-        /* Scrollbar personalizado estilo cyber */
         ::-webkit-scrollbar {
             width: 10px;
         }
@@ -25,11 +25,8 @@
             background: var(--bg-deep);
         }
         ::-webkit-scrollbar-thumb {
-            background: var(--accent-blue);
+            background: var(--accent-neon);
             border-radius: 5px;
-        }
-        ::-webkit-scrollbar-thumb:hover {
-            background: var(--accent-glow);
         }
 
         * {
@@ -46,11 +43,8 @@
             line-height: 1.7;
             overflow-x: hidden;
             position: relative;
-            /* Cursor personalizado */
-            cursor: url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="%23478cbf"><path d="M12 2a2 2 0 0 0-2 2v1H7a2 2 0 0 0-2 2v2H3a1 1 0 0 0-1 1v2a1 1 0 0 0 1 1h2v4a3 3 0 0 0 3 3h1v2a1 1 0 0 0 1 1h4a1 1 0 0 0 1-1v-2h1a3 3 0 0 0 3-3v-4h2a1 1 0 0 0 1-1v-2a1 1 0 0 0-1-1h-2V7a2 2 0 0 0-2-2h-3V4a2 2 0 0 0-2-2zm-3 8a1.5 1.5 0 1 1 0 3 1.5 1.5 0 0 1 0-3zm6 0a1.5 1.5 0 1 1 0 3 1.5 1.5 0 0 1 0-3z"/></svg>'), auto;
         }
 
-        /* Canvas de fondo para partículas espaciales */
         #particle-canvas {
             position: fixed;
             top: 0;
@@ -61,43 +55,15 @@
             z-index: 0;
         }
 
-        /* Indicador flotante de scroll */
-        .scroll-icon-floating {
-            position: fixed;
-            bottom: 25px;
-            right: 25px;
-            width: 50px;
-            height: 50px;
-            background: var(--bg-card);
-            border: 2px solid var(--accent-blue);
-            border-radius: 50%;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            box-shadow: 0 0 20px rgba(71, 140, 191, 0.4);
-            z-index: 1000;
-            animation: floatBounce 2.5s infinite ease-in-out;
-            transition: transform 0.3s;
-        }
-        .scroll-icon-floating:hover {
-            transform: scale(1.1);
-        }
-
-        @keyframes floatBounce {
-            0%, 20%, 50%, 80%, 100% { transform: translateY(0); }
-            40% { transform: translateY(-10px); }
-            60% { transform: translateY(-5px); }
-        }
-
-        /* Navegación Superior */
+        /* Navegación */
         nav {
             position: fixed;
             top: 0;
             left: 0;
             width: 100%;
-            background: rgba(5, 7, 15, 0.85);
-            backdrop-filter: blur(10px);
-            border-bottom: 1px solid var(--border-color);
+            background: rgba(3, 6, 17, 0.9);
+            backdrop-filter: blur(12px);
+            border-bottom: 1px solid rgba(0, 240, 255, 0.2);
             display: flex;
             justify-content: space-between;
             align-items: center;
@@ -109,15 +75,16 @@
             display: flex;
             align-items: center;
             gap: 12px;
-            font-weight: bold;
-            font-size: 1.2rem;
+            font-weight: 800;
+            font-size: 1.3rem;
             color: var(--text-main);
             text-decoration: none;
+            letter-spacing: 1px;
         }
 
-        .nav-logo svg {
-            width: 32px;
-            height: 32px;
+        .nav-logo span {
+            color: var(--accent-neon);
+            text-shadow: 0 0 10px rgba(0, 240, 255, 0.6);
         }
 
         .nav-links {
@@ -130,69 +97,74 @@
             color: var(--text-muted);
             text-decoration: none;
             font-size: 0.95rem;
-            transition: color 0.3s;
+            transition: all 0.3s;
         }
 
         .nav-links a:hover {
-            color: var(--accent-blue);
+            color: var(--accent-neon);
+            text-shadow: 0 0 8px var(--accent-neon);
         }
 
-        /* Header Principal / Hero Section */
+        /* Hero Header */
         header {
             position: relative;
             z-index: 1;
-            padding: 160px 20px 80px;
+            padding: 140px 20px 70px;
             text-align: center;
-            background: radial-gradient(circle at center, rgba(71, 140, 191, 0.1) 0%, transparent 70%);
+            background: radial-gradient(circle at center, rgba(0, 240, 255, 0.12) 0%, transparent 70%);
         }
 
         .studio-badge {
             display: inline-block;
-            background: rgba(71, 140, 191, 0.1);
-            color: var(--accent-blue);
-            border: 1px solid rgba(71, 140, 191, 0.3);
-            padding: 6px 16px;
+            background: rgba(0, 240, 255, 0.1);
+            color: var(--accent-neon);
+            border: 1px solid rgba(0, 240, 255, 0.4);
+            padding: 6px 18px;
             border-radius: 20px;
             font-size: 0.85rem;
             text-transform: uppercase;
             letter-spacing: 2px;
-            margin-bottom: 20px;
-            box-shadow: 0 0 15px rgba(71, 140, 191, 0.2);
+            margin-bottom: 25px;
+            box-shadow: 0 0 15px rgba(0, 240, 255, 0.2);
         }
 
-        .logo-container {
-            width: 140px;
-            height: 140px;
-            margin: 0 auto 25px;
-            filter: drop-shadow(0 0 25px rgba(71, 140, 191, 0.6));
-            animation: pulseGlow 4s infinite alternate;
+        /* Canvas del Logo Neón Galáctico */
+        .logo-canvas-container {
+            width: 320px;
+            height: 320px;
+            margin: 0 auto 20px;
+            display: flex;
+            justify-content: center;
+            align-items: center;
         }
 
-        @keyframes pulseGlow {
-            0% { filter: drop-shadow(0 0 15px rgba(71, 140, 191, 0.4)); }
-            100% { filter: drop-shadow(0 0 30px rgba(99, 102, 241, 0.8)); }
+        #logo-canvas {
+            width: 320px;
+            height: 320px;
+            filter: drop-shadow(0 0 20px rgba(0, 240, 255, 0.6));
         }
 
         h1 {
-            font-size: 3.5rem;
-            font-weight: 800;
-            background: linear-gradient(135deg, #ffffff 30%, var(--accent-blue) 100%);
+            font-size: 3.8rem;
+            font-weight: 900;
+            background: linear-gradient(135deg, #ffffff 40%, var(--accent-neon) 100%);
             -webkit-background-clip: text;
             -webkit-text-fill-color: transparent;
             margin-bottom: 15px;
+            letter-spacing: 2px;
         }
 
         .subtitle {
             font-size: 1.25rem;
             color: var(--text-muted);
-            max-width: 700px;
+            max-width: 750px;
             margin: 0 auto 35px;
         }
 
         .hero-buttons {
             display: flex;
             justify-content: center;
-            gap: 15px;
+            gap: 18px;
             flex-wrap: wrap;
         }
 
@@ -200,50 +172,51 @@
             display: inline-flex;
             align-items: center;
             gap: 10px;
-            padding: 14px 28px;
+            padding: 14px 30px;
             border-radius: 8px;
             text-decoration: none;
-            font-weight: 600;
+            font-weight: 700;
             font-size: 1rem;
             transition: all 0.3s ease;
             cursor: pointer;
         }
 
         .btn-primary {
-            background: var(--accent-blue);
-            color: #ffffff;
-            box-shadow: 0 0 20px rgba(71, 140, 191, 0.4);
+            background: var(--accent-neon);
+            color: #030611;
+            box-shadow: 0 0 20px rgba(0, 240, 255, 0.5);
         }
 
         .btn-primary:hover {
-            background: #3b75a1;
-            box-shadow: 0 0 25px rgba(71, 140, 191, 0.7);
-            transform: translateY(-2px);
+            background: #ffffff;
+            box-shadow: 0 0 30px rgba(0, 240, 255, 0.9);
+            transform: translateY(-3px);
         }
 
         .btn-secondary {
             background: var(--bg-card);
             color: var(--text-main);
-            border: 1px solid var(--border-color);
+            border: 1px solid rgba(0, 240, 255, 0.3);
         }
 
         .btn-secondary:hover {
             background: var(--bg-card-hover);
-            border-color: var(--accent-blue);
-            transform: translateY(-2px);
+            border-color: var(--accent-neon);
+            transform: translateY(-3px);
+            box-shadow: 0 0 15px rgba(0, 240, 255, 0.2);
         }
 
-        /* Contenedor Principal */
+        /* Contenido Principal */
         main {
             position: relative;
             z-index: 1;
-            max-width: 1100px;
+            max-width: 1150px;
             margin: 0 auto;
             padding: 40px 20px;
         }
 
         section {
-            margin-bottom: 90px;
+            margin-bottom: 100px;
         }
 
         .section-header {
@@ -252,17 +225,17 @@
         }
 
         .section-header h2 {
-            font-size: 2.3rem;
+            font-size: 2.5rem;
             color: var(--text-main);
             margin-bottom: 10px;
         }
 
         .section-header p {
             color: var(--text-muted);
-            font-size: 1.05rem;
+            font-size: 1.1rem;
         }
 
-        /* Grillas y Tarjetas */
+        /* Tarjetas / Grillas */
         .grid-3 {
             display: grid;
             grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
@@ -272,8 +245,8 @@
         .card {
             background: var(--bg-card);
             border: 1px solid var(--border-color);
-            border-radius: 12px;
-            padding: 30px;
+            border-radius: 14px;
+            padding: 32px;
             transition: all 0.3s ease;
             position: relative;
             overflow: hidden;
@@ -286,15 +259,15 @@
             left: 0;
             width: 100%;
             height: 3px;
-            background: linear-gradient(90deg, var(--accent-blue), var(--accent-glow));
+            background: linear-gradient(90deg, var(--accent-neon), var(--accent-purple));
             opacity: 0;
             transition: opacity 0.3s;
         }
 
         .card:hover {
             transform: translateY(-6px);
-            border-color: rgba(71, 140, 191, 0.5);
-            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.5);
+            border-color: rgba(0, 240, 255, 0.4);
+            box-shadow: 0 10px 30px rgba(0, 240, 255, 0.15);
         }
 
         .card:hover::before {
@@ -302,59 +275,153 @@
         }
 
         .card-icon {
-            font-size: 2.2rem;
-            margin-bottom: 20px;
+            font-size: 2.3rem;
+            margin-bottom: 18px;
         }
 
         .card h3 {
-            font-size: 1.35rem;
+            font-size: 1.4rem;
             color: var(--text-main);
             margin-bottom: 12px;
         }
 
         .card p {
             color: var(--text-muted);
-            font-size: 0.95rem;
+            font-size: 0.98rem;
         }
 
-        /* Sección de Estadísticas / Specs */
+        /* Banner Destacado Blender .blend */
+        .blender-banner {
+            background: linear-gradient(135deg, rgba(10, 15, 36, 0.9), rgba(18, 26, 56, 0.9));
+            border: 1px solid rgba(0, 240, 255, 0.4);
+            border-radius: 16px;
+            padding: 40px;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            gap: 30px;
+            flex-wrap: wrap;
+            box-shadow: 0 0 30px rgba(0, 240, 255, 0.1);
+        }
+
+        .blender-info {
+            max-width: 650px;
+        }
+
+        .blender-info h3 {
+            font-size: 1.8rem;
+            color: var(--accent-neon);
+            margin-bottom: 10px;
+        }
+
+        .blender-tag {
+            background: rgba(139, 92, 246, 0.2);
+            color: var(--accent-purple);
+            padding: 4px 12px;
+            border-radius: 6px;
+            font-size: 0.85rem;
+            font-weight: bold;
+            border: 1px solid rgba(139, 92, 246, 0.4);
+        }
+
+        /* Specs Stats */
         .specs-container {
             background: var(--bg-card);
             border: 1px solid var(--border-color);
             border-radius: 16px;
-            padding: 40px;
+            padding: 35px;
             display: grid;
             grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
-            gap: 30px;
+            gap: 25px;
             text-align: center;
         }
 
         .spec-item h3 {
             font-size: 2.5rem;
-            color: var(--accent-blue);
+            color: var(--accent-neon);
             margin-bottom: 5px;
             font-weight: 800;
         }
 
         .spec-item p {
             color: var(--text-muted);
-            font-size: 0.95rem;
+            font-size: 0.9rem;
             text-transform: uppercase;
             letter-spacing: 1px;
         }
 
+        /* Pestañas de Código GDScript / C# */
+        .code-box {
+            background: #02040a;
+            border: 1px solid rgba(0, 240, 255, 0.2);
+            border-radius: 12px;
+            overflow: hidden;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.8);
+        }
+
+        .code-header {
+            background: #080d1e;
+            padding: 12px 20px;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            border-bottom: 1px solid var(--border-color);
+        }
+
+        .code-tabs {
+            display: flex;
+            gap: 10px;
+        }
+
+        .tab-btn {
+            background: transparent;
+            border: none;
+            color: var(--text-muted);
+            padding: 6px 14px;
+            border-radius: 6px;
+            cursor: pointer;
+            font-weight: 600;
+            font-size: 0.9rem;
+            transition: all 0.3s;
+        }
+
+        .tab-btn.active {
+            background: rgba(0, 240, 255, 0.15);
+            color: var(--accent-neon);
+            border: 1px solid rgba(0, 240, 255, 0.4);
+        }
+
+        .code-content {
+            padding: 25px;
+            overflow-x: auto;
+            font-family: 'Courier New', Courier, monospace;
+            font-size: 0.95rem;
+            color: #cbd5e1;
+            line-height: 1.6;
+            display: none;
+        }
+
+        .code-content.active {
+            display: block;
+        }
+
+        .keyword { color: #38bdf8; }
+        .string { color: #34d399; }
+        .function { color: #a78bfa; }
+        .comment { color: #64748b; font-style: italic; }
+
         /* Roadmap Timeline */
         .roadmap-timeline {
             position: relative;
-            max-width: 800px;
+            max-width: 850px;
             margin: 0 auto;
             padding-left: 30px;
-            border-left: 2px solid var(--border-color);
+            border-left: 2px solid rgba(0, 240, 255, 0.3);
         }
 
         .roadmap-item {
             position: relative;
-            margin-bottom: 40px;
+            margin-bottom: 45px;
         }
 
         .roadmap-item::before {
@@ -365,20 +432,20 @@
             width: 14px;
             height: 14px;
             border-radius: 50%;
-            background: var(--accent-blue);
-            box-shadow: 0 0 10px var(--accent-blue);
+            background: var(--accent-neon);
+            box-shadow: 0 0 12px var(--accent-neon);
         }
 
         .roadmap-item h3 {
-            font-size: 1.2rem;
+            font-size: 1.3rem;
             color: var(--text-main);
             margin-bottom: 6px;
         }
 
         .roadmap-item span {
             display: inline-block;
-            font-size: 0.8rem;
-            color: var(--accent-blue);
+            font-size: 0.85rem;
+            color: var(--accent-neon);
             text-transform: uppercase;
             letter-spacing: 1px;
             margin-bottom: 8px;
@@ -386,27 +453,28 @@
 
         .roadmap-item p {
             color: var(--text-muted);
-            font-size: 0.95rem;
+            font-size: 0.98rem;
         }
 
-        /* Footer Moderno */
+        /* Footer */
         footer {
             position: relative;
             z-index: 1;
-            background: #030408;
+            background: #010308;
             border-top: 1px solid var(--border-color);
             padding: 60px 20px 30px;
             text-align: center;
         }
 
-        .footer-content {
-            max-width: 800px;
-            margin: 0 auto 30px;
+        .footer-content h3 {
+            font-size: 1.5rem;
+            color: var(--accent-neon);
+            margin-bottom: 10px;
         }
 
         .footer-content p {
             color: var(--text-muted);
-            margin-bottom: 20px;
+            margin-bottom: 25px;
         }
 
         .footer-bottom {
@@ -419,119 +487,193 @@
 </head>
 <body>
 
-    <!-- Canvas de partículas de fondo -->
     <canvas id="particle-canvas"></canvas>
 
-    <!-- Indicador flotante en la esquina inferior -->
-    <div class="scroll-icon-floating" title="Desplázate hacia abajo para ver más">
-        <svg width="26" height="26" viewBox="0 0 24 24" fill="#478cbf">
-            <path d="M12 2a2 2 0 0 0-2 2v1H7a2 2 0 0 0-2 2v2H3a1 1 0 0 0-1 1v2a1 1 0 0 0 1 1h2v4a3 3 0 0 0 3 3h1v2a1 1 0 0 0 1 1h4a1 1 0 0 0 1-1v-2h1a3 3 0 0 0 3-3v-4h2a1 1 0 0 0 1-1v-2a1 1 0 0 0-1-1h-2V7a2 2 0 0 0-2-2h-3V4a2 2 0 0 0-2-2zm-3 8a1.5 1.5 0 1 1 0 3 1.5 1.5 0 0 1 0-3zm6 0a1.5 1.5 0 1 1 0 3 1.5 1.5 0 0 1 0-3z"/>
-        </svg>
-    </div>
-
-    <!-- Barra de navegación -->
+    <!-- Barra de Navegación -->
     <nav>
         <a href="#" class="nav-logo">
-            <svg viewBox="0 0 128 128" width="100%" height="100%">
-                <path d="M64 8a10 10 0 0 0-10 10v6H36a10 10 0 0 0-10 10v10H16a5 5 0 0 0-5 5v12a5 5 0 0 0 5 5h10v20a16 16 0 0 0 16 16h6v10a5 5 0 0 0 5 5h22a5 5 0 0 0 5-5v-10h6a16 16 0 0 0 16-16V66h10a5 5 0 0 0 5-5V49a5 5 0 0 0-5-5H102V34a10 10 0 0 0-10-10H74v-6A10 10 0 0 0 64 8zm-18 42a9 9 0 1 1 0 18 9 9 0 0 1 0-18zm36 0a9 9 0 1 1 0 18 9 9 0 0 1 0-18z" fill="#478cbf"/>
-            </svg>
-            Galaxy Engine
+            <span>GALAXY</span> ENGINE
         </a>
         <ul class="nav-links">
             <li><a href="#funciones">Funciones</a></li>
-            <li><a href="#arquitectura">Arquitectura</a></li>
+            <li><a href="#ecosistema">Ecosistema</a></li>
+            <li><a href="#lenguajes">GDScript / C#</a></li>
+            <li><a href="#blender">Blender .blend</a></li>
             <li><a href="#roadmap">Roadmap</a></li>
         </ul>
     </nav>
 
-    <!-- Header / Hero Section -->
+    <!-- Hero Header con Logo Neón Interactivo -->
     <header>
-        <div class="studio-badge">Galaxy Byte Studios - Production</div>
+        <div class="studio-badge">Galaxy Byte Studios — Official Production</div>
         
-        <!-- Logo animado en SVG nativo -->
-        <div class="logo-container">
-            <svg viewBox="0 0 128 128" width="100%" height="100%">
-                <g fill="#478cbf">
-                    <path d="M64 8a10 10 0 0 0-10 10v6H36a10 10 0 0 0-10 10v10H16a5 5 0 0 0-5 5v12a5 5 0 0 0 5 5h10v20a16 16 0 0 0 16 16h6v10a5 5 0 0 0 5 5h22a5 5 0 0 0 5-5v-10h6a16 16 0 0 0 16-16V66h10a5 5 0 0 0 5-5V49a5 5 0 0 0-5-5H102V34a10 10 0 0 0-10-10H74v-6A10 10 0 0 0 64 8zm-18 42a9 9 0 1 1 0 18 9 9 0 0 1 0-18zm36 0a9 9 0 1 1 0 18 9 9 0 0 1 0-18z"/>
-                    <rect x="52" y="80" width="24" height="6" rx="3" fill="#05070f"/>
-                </g>
-            </svg>
+        <div class="logo-canvas-container">
+            <canvas id="logo-canvas" width="320" height="320"></canvas>
         </div>
 
-        <h1>Galaxy Engine</h1>
-        <p class="subtitle">El motor de videojuegos definitivo de alto rendimiento para desarrolladores independientes. Diseñado nativamente desde el núcleo con máxima eficiencia y optimización extrema.</p>
+        <h1>GALAXY ENGINE</h1>
+        <p class="subtitle">El motor de desarrollo 2D y 3D de alto rendimiento para creadores independientes. Equipado con soporte completo para GDScript, C#, plugins nativos e importación directa de archivos .blend.</p>
         
         <div class="hero-buttons">
             <a href="#funciones" class="btn btn-primary">Ver Características</a>
-            <a href="https://github.com" target="_blank" class="btn btn-secondary">Repositorio GitHub</a>
+            <a href="https://github.com" target="_blank" class="btn btn-secondary">Repositorio en GitHub</a>
         </div>
     </header>
 
     <main>
-        <!-- Estadísticas Técnicas -->
+        <!-- Specs Rápidas -->
         <section>
             <div class="specs-container">
                 <div class="spec-item">
-                    <h3>100%</h3>
-                    <p>Nativo y Optimizado</p>
+                    <h3>GDScript / C#</h3>
+                    <p>Soporte Multilenguaje</p>
                 </div>
                 <div class="spec-item">
-                    <h3>0ms</h3>
-                    <p>Bloqueo de Interfaz</p>
+                    <h3>.BLEND</h3>
+                    <p>Integración Directa 3D</p>
                 </div>
                 <div class="spec-item">
-                    <h3>60+</h3>
-                    <p>FPS Estables en 2D/3D</p>
+                    <h3>100+</h3>
+                    <p>Plugins y Starter Kits</p>
                 </div>
                 <div class="spec-item">
-                    <h3>C++</h3>
-                    <p>Core de Alto Rendimiento</p>
+                    <h3>2D / 3D</h3>
+                    <p>Renderizado Nativo</p>
                 </div>
             </div>
         </section>
 
-        <!-- Funciones del Motor -->
+        <!-- Banner de Blender .blend -->
+        <section id="blender">
+            <div class="blender-banner">
+                <div class="blender-info">
+                    <span class="blender-tag">NATIVO 3D</span>
+                    <h3>Compatibilidad Directa con Archivos .blend</h3>
+                    <p>No pierdas tiempo exportando a FBX o OBJ. Guarda tus modelos directamente en Blender `.blend` y Galaxy Engine los importará automáticamente en tiempo real con materiales, mallas y animaciones listos.</p>
+                </div>
+                <div>
+                    <a href="#lenguajes" class="btn btn-secondary">Probar Pipeline</a>
+                </div>
+            </div>
+        </section>
+
+        <!-- Funciones Principales -->
         <section id="funciones">
             <div class="section-header">
-                <h2>Funciones de Siguiente Generación</h2>
-                <p>Diseñado desde cero por Galaxy Byte Studios para ofrecer control absoluto del desarrollo.</p>
+                <h2>Potencia Completa para Desarrolladores</h2>
+                <p>Diseñado por Galaxy Byte Studios para maximizar la velocidad de trabajo y la creatividad.</p>
             </div>
 
             <div class="grid-3">
                 <div class="card">
                     <div class="card-icon">⚡</div>
-                    <h3>Motor de Nodos Avanzado</h3>
-                    <p>Estructura de escena jerárquica ultrarrápida que permite herencia, composición limpia y gestión de estados sin sobrecarga de memoria.</p>
-                </div>
-
-                <div class="card">
-                    <div class="card-icon">🎮</div>
-                    <h3>Editor Integrado Nativo</h3>
-                    <p>Herramientas de inspección en tiempo real, gestor de recursos optimizado y diseñador de escenas fluido para Windows.</p>
-                </div>
-
-                <div class="card">
-                    <div class="card-icon">🚀</div>
-                    <h3>Físicas de Alta Precisión</h3>
-                    <p>Subsistema de colisiones 2D y detección de cuerpos rígidos con optimización matemática de ciclos de CPU.</p>
-                </div>
-
-                <div class="card">
-                    <div class="card-icon">🎨</div>
-                    <h3>Renderizado por Hardware</h3>
-                    <p>Pipeline gráfico optimizado para evitar cuellos de botella, compatible con shaders personalizados y efectos visuales retro/modernos.</p>
-                </div>
-
-                <div class="card">
-                    <div class="card-icon">🔊</div>
-                    <h3>Audio Posicional de Baja Latencia</h3>
-                    <p>Sistema de gestión de canales de audio multicanal diseñado para experiencias inmersivas y juegos de terror atmosférico.</p>
+                    <h3>GDScript y C# Nativo</h3>
+                    <p>Elige tu flujo preferido: la rapidez y sencillez de GDScript o el poder y rendimiento industrial de C# con .NET.</p>
                 </div>
 
                 <div class="card">
                     <div class="card-icon">📦</div>
-                    <h3>Exportación Limpia</h3>
-                    <p>Generación de ejecutables compactos listos para distribuir en itch.io, Steam o plataformas independientes sin dependencias basura.</p>
+                    <h3>Plugins y Starter Kits</h3>
+                    <p>Accede a un ecosistema masivo de herramientas, plantillas de inicio rápido para FPS, RPGs, plataformas 2D y sistemas de inventario.</p>
+                </div>
+
+                <div class="card">
+                    <div class="card-icon">🎨</div>
+                    <h3>Importador .blend Inteligente</h3>
+                    <p>Sincronización instantánea con Blender. Cambias un modelo 3D en Blender, guardas y se actualiza directo en tu escena.</p>
+                </div>
+
+                <div class="card">
+                    <div class="card-icon">🎮</div>
+                    <h3>Sistema de Nodos 2D y 3D</h3>
+                    <p>Arquitectura flexible para estructurar tus escenas con colisiones, animaciones y jerarquías limpias.</p>
+                </div>
+
+                <div class="card">
+                    <div class="card-icon">🔊</div>
+                    <h3>Audio Posicional Multicanal</h3>
+                    <p>Motor de sonido ultra rápido con soporte MP3 y OGG, buses de mezcla personalizables y efectos 2D/3D.</p>
+                </div>
+
+                <div class="card">
+                    <div class="card-icon">🚀</div>
+                    <h3>Exportación Multiplataforma</h3>
+                    <p>Genera ejecutables ultra livianos para Windows, Linux y la Web lista para publicar en itch.io.</p>
+                </div>
+            </div>
+        </section>
+
+        <!-- Ejemplo de Código GDScript y C# -->
+        <section id="lenguajes">
+            <div class="section-header">
+                <h2>Flexibilidad de Scripting</h2>
+                <p>Escribe la lógica de tus personajes tanto en GDScript como en C# con total compatibilidad.</p>
+            </div>
+
+            <div class="code-box">
+                <div class="code-header">
+                    <div class="code-tabs">
+                        <button class="tab-btn active" onclick="switchTab('gdscript')">GDScript</button>
+                        <button class="tab-btn" onclick="switchTab('csharp')">C# (.NET)</button>
+                    </div>
+                    <span style="color: var(--text-muted); font-size: 0.85rem;">PlayerController</span>
+                </div>
+
+                <!-- Código GDScript -->
+                <div id="gdscript" class="code-content active">
+<span class="keyword">extends</span> CharacterBody2D
+
+<span class="keyword">const</span> SPEED = <span class="string">300.0</span>
+<span class="keyword">const</span> JUMP_VELOCITY = <span class="string">-400.0</span>
+
+<span class="keyword">func</span> <span class="function">_physics_process</span>(delta):
+    <span class="comment"># Aplicar gravedad</span>
+    <span class="keyword">if not</span> is_on_floor():
+        velocity.y += get_gravity() * delta
+
+    <span class="comment"># Control de salto y movimiento</span>
+    <span class="keyword">if</span> Input.is_action_just_pressed(<span class="string">"ui_accept"</span>) <span class="keyword">and</span> is_on_floor():
+        velocity.y = JUMP_VELOCITY
+
+    <span class="keyword">var</span> direction = Input.get_axis(<span class="string">"ui_left"</span>, <span class="string">"ui_right"</span>)
+    <span class="keyword">if</span> direction:
+        velocity.x = direction * SPEED
+    <span class="keyword">else</span>:
+        velocity.x = move_toward(velocity.x, <span class="string">0</span>, SPEED)
+
+    move_and_slide()
+                </div>
+
+                <!-- Código C# -->
+                <div id="csharp" class="code-content">
+<span class="keyword">using</span> Godot;
+<span class="keyword">using</span> System;
+
+<span class="keyword">public partial class</span> <span class="function">PlayerController</span> : CharacterBody2D
+{
+    <span class="keyword">public const float</span> Speed = <span class="string">300.0f</span>;
+    <span class="keyword">public const float</span> JumpVelocity = <span class="string">-400.0f</span>;
+
+    <span class="keyword">public override void</span> <span class="function">_PhysicsProcess</span>(<span class="keyword">double</span> delta)
+    {
+        Vector2 velocity = Velocity;
+
+        <span class="keyword">if</span> (!IsOnFloor())
+            velocity.Y += GetGravity().Y * (<span class="keyword">float</span>)delta;
+
+        <span class="keyword">if</span> (Input.IsActionJustPressed(<span class="string">"ui_accept"</span>) && IsOnFloor())
+            velocity.Y = JumpVelocity;
+
+        Vector2 inputDir = Input.GetVector(<span class="string">"ui_left"</span>, <span class="string">"ui_right"</span>, <span class="string">"ui_up"</span>, <span class="string">"ui_down"</span>);
+        <span class="keyword">if</span> (inputDir != Vector2.Zero)
+            velocity.X = inputDir.X * Speed;
+        <span class="keyword">else</span>
+            velocity.X = Mathf.MoveToward(Velocity.X, <span class="string">0</span>, Speed);
+
+        Velocity = velocity;
+        MoveAndSlide();
+    }
+}
                 </div>
             </div>
         </section>
@@ -539,27 +681,27 @@
         <!-- Roadmap -->
         <section id="roadmap">
             <div class="section-header">
-                <h2>Roadmap de Desarrollo</h2>
-                <p>El plan de evolución tecnológica trazado por Galaxy Byte Studios.</p>
+                <h2>Roadmap de Galaxy Engine</h2>
+                <p>El camino de desarrollo de Galaxy Byte Studios.</p>
             </div>
 
             <div class="roadmap-timeline">
                 <div class="roadmap-item">
-                    <span>Fase 1 — Completada (Octubre 2026)</span>
-                    <h3>Lanzamiento del Core Base</h3>
-                    <p>Estreno exitoso del núcleo principal del motor en entorno Windows x86_64, superando los estándares de hardware y optimizando cada proceso interno.</p>
+                    <span>Octubre 2026 — Completado</span>
+                    <h3>Compilación del Core y Entorno de Pruebas</h3>
+                    <p>Estabilización del motor en Windows x86_64, pruebas completadas del sistema de audio `AudioStreamPlayer2D` y configuración de hilos de compilación.</p>
                 </div>
 
                 <div class="roadmap-item">
-                    <span>Fase 2 — En Curso (Actual)</span>
-                    <h3>Diseño de Interfaz y Web Oficial</h3>
-                    <p>Despliegue del portal web en GitHub Pages (`Galaxy Engine`), documentación de APIs y estructuración de proyectos internos de prueba.</p>
+                    <span>Actual — En Desarrollo</span>
+                    <h3>Ecosistema de Starter Kits y Plugins</h3>
+                    <p>Integración completa de compatibilidad directa con archivos `.blend` de Blender y publicación de kits para géneros 2D y 3D.</p>
                 </div>
 
                 <div class="roadmap-item">
-                    <span>Fase 3 — Próximamente</span>
-                    <h3>Lanzamiento del Primer Videojuego Oficial</h3>
-                    <p>Desarrollo y empaquetado del primer título comercial creado íntegramente utilizando Galaxy Engine bajo el sello de Galaxy Byte Studios.</p>
+                    <span>Próximo Hito</span>
+                    <h3>Primer Videojuego Oficial</h3>
+                    <p>Lanzamiento del primer título creado 100% con Galaxy Engine desarrollado por Galaxy Byte Studios.</p>
                 </div>
             </div>
         </section>
@@ -568,16 +710,121 @@
     <!-- Footer -->
     <footer>
         <div class="footer-content">
-            <h3>Galaxy Byte Studios</h3>
-            <p>Construyendo herramientas de desarrollo independientes, potentes y libres de ataduras corporativas.</p>
+            <h3>GALAXY BYTE STUDIOS</h3>
+            <p>Creando tecnología de videojuegos independiente, potente y libre.</p>
         </div>
         <div class="footer-bottom">
             <p>&copy; 2026 Galaxy Byte Studios & Galaxy Engine. Todos los derechos reservados.</p>
         </div>
     </footer>
 
-    <!-- Script de Partículas Espaciales en JavaScript Puro -->
+    <!-- Scripts de Partículas y Canvas de Logo Neón Galáctico -->
     <script>
+        // Tab switching (GDScript / C#)
+        function switchTab(lang) {
+            document.querySelectorAll('.tab-btn').forEach(btn => btn.classList.remove('active'));
+            document.querySelectorAll('.code-content').forEach(content => content.classList.remove('active'));
+            
+            if(lang === 'gdscript') {
+                event.target.classList.add('active');
+                document.getElementById('gdscript').classList.add('active');
+            } else {
+                event.target.classList.add('active');
+                document.getElementById('csharp').classList.add('active');
+            }
+        }
+
+        // Renderizado del Logo Neón Galáctico (Inspirado en la imagen)
+        const logoCanvas = document.getElementById('logo-canvas');
+        const lctx = logoCanvas.getContext('2d');
+
+        function drawNeonLogo() {
+            lctx.clearRect(0, 0, 320, 320);
+
+            // Resplandor de fondo Neón Cian
+            lctx.save();
+            lctx.shadowBlur = 25;
+            lctx.shadowColor = '#00f0ff';
+            lctx.strokeStyle = '#00f0ff';
+            lctx.lineWidth = 4;
+
+            // Silueta del Robot Estilo Godot
+            lctx.beginPath();
+            lctx.moveTo(80, 100);
+            lctx.lineTo(110, 80);
+            lctx.lineTo(130, 100);
+            lctx.lineTo(190, 100);
+            lctx.lineTo(210, 80);
+            lctx.lineTo(240, 100);
+            lctx.lineTo(260, 140);
+            lctx.lineTo(250, 190);
+            lctx.lineTo(220, 220);
+            lctx.lineTo(190, 200);
+            lctx.lineTo(170, 220);
+            lctx.lineTo(150, 220);
+            lctx.lineTo(130, 200);
+            lctx.lineTo(100, 220);
+            lctx.lineTo(70, 190);
+            lctx.lineTo(60, 140);
+            lctx.closePath();
+            lctx.stroke();
+
+            // Línea de la boca recortada
+            lctx.beginPath();
+            lctx.moveTo(85, 205);
+            lctx.quadraticCurveTo(160, 260, 235, 205);
+            lctx.stroke();
+
+            // Ojo Izquierdo Galáctico
+            lctx.beginPath();
+            lctx.arc(115, 155, 22, 0, Math.PI * 2);
+            lctx.stroke();
+            lctx.beginPath();
+            lctx.arc(115, 155, 14, 0, Math.PI * 2);
+            lctx.stroke();
+
+            // Ojo Derecho Galáctico
+            lctx.beginPath();
+            lctx.arc(205, 155, 22, 0, Math.PI * 2);
+            lctx.stroke();
+            lctx.beginPath();
+            lctx.arc(205, 155, 14, 0, Math.PI * 2);
+            lctx.stroke();
+
+            // Nariz
+            lctx.beginPath();
+            lctx.roundRect(153, 145, 14, 25, 7);
+            lctx.stroke();
+
+            // Espiral Galaxia en la Frente
+            lctx.beginPath();
+            for (let i = 0; i < 20; i++) {
+                let angle = 0.3 * i;
+                let x = 160 + (1 + angle) * Math.cos(angle) * 1.5;
+                let y = 115 + (1 + angle) * Math.sin(angle) * 1.5;
+                if (i === 0) lctx.moveTo(x, y);
+                else lctx.lineTo(x, y);
+            }
+            lctx.stroke();
+            lctx.restore();
+
+            // Texto inferior GALAXY ENGINE
+            lctx.font = '800 18px system-ui';
+            lctx.fillStyle = '#00f0ff';
+            lctx.textAlign = 'center';
+            lctx.shadowBlur = 10;
+            lctx.shadowColor = '#00f0ff';
+            lctx.fillText('GALAXY ENGINE', 160, 280);
+
+            lctx.font = '600 11px system-ui';
+            lctx.fillStyle = '#94a3b8';
+            lctx.shadowBlur = 0;
+            lctx.fillText('GALAXY BYTE STUDIOS', 160, 298);
+        }
+
+        drawNeonLogo();
+
+        // Partículas de Fondo
         const canvas = document.getElementById('particle-canvas');
         const ctx = canvas.getContext('2d');
 
@@ -589,46 +836,32 @@
         resizeCanvas();
 
         const particlesArray = [];
-        const numberOfParticles = 60;
-
-        class Particle {
-            constructor() {
-                this.x = Math.random() * canvas.width;
-                this.y = Math.random() * canvas.height;
-                this.size = Math.random() * 2 + 0.5;
-                this.speedX = (Math.random() - 0.5) * 0.3;
-                this.speedY = (Math.random() - 0.5) * 0.3;
-                this.opacity = Math.random() * 0.7 + 0.2;
-            }
-            update() {
-                this.x += this.speedX;
-                this.y += this.speedY;
-
-                if (this.x > canvas.width) this.x = 0;
-                if (this.x < 0) this.x = canvas.width;
-                if (this.y > canvas.height) this.y = 0;
-                if (this.y < 0) this.y = canvas.height;
-            }
-            draw() {
-                ctx.fillStyle = `rgba(71, 140, 191, ${this.opacity})`;
-                ctx.beginPath();
-                ctx.arc(this.x, this.y, this.size, 0, Math.PI * 2);
-                ctx.fill();
-            }
+        for (let i = 0; i < 70; i++) {
+            particlesArray.push({
+                x: Math.random() * canvas.width,
+                y: Math.random() * canvas.height,
+                size: Math.random() * 2 + 0.5,
+                speedX: (Math.random() - 0.5) * 0.4,
+                speedY: (Math.random() - 0.5) * 0.4,
+                opacity: Math.random() * 0.7 + 0.2
+            });
         }
-
-        function initParticles() {
-            for (let i = 0; i < numberOfParticles; i++) {
-                particlesArray.push(new Particle());
-            }
-        }
-        initParticles();
 
         function animateParticles() {
             ctx.clearRect(0, 0, canvas.width, canvas.height);
-            particlesArray.forEach(particle => {
-                particle.update();
-                particle.draw();
+            particlesArray.forEach(p => {
+                p.x += p.speedX;
+                p.y += p.speedY;
+
+                if (p.x > canvas.width) p.x = 0;
+                if (p.x < 0) p.x = canvas.width;
+                if (p.y > canvas.height) p.y = 0;
+                if (p.y < 0) p.y = canvas.height;
+
+                ctx.fillStyle = `rgba(0, 240, 255, ${p.opacity})`;
+                ctx.beginPath();
+                ctx.arc(p.x, p.y, p.size, 0, Math.PI * 2);
+                ctx.fill();
             });
             requestAnimationFrame(animateParticles);
         }
