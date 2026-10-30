@@ -46,7 +46,7 @@
             line-height: 1.7;
             overflow-x: hidden;
             position: relative;
-            /* Cursor personalizado con el robot de Godot */
+            /* Cursor personalizado */
             cursor: url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="%23478cbf"><path d="M12 2a2 2 0 0 0-2 2v1H7a2 2 0 0 0-2 2v2H3a1 1 0 0 0-1 1v2a1 1 0 0 0 1 1h2v4a3 3 0 0 0 3 3h1v2a1 1 0 0 0 1 1h4a1 1 0 0 0 1-1v-2h1a3 3 0 0 0 3-3v-4h2a1 1 0 0 0 1-1v-2a1 1 0 0 0-1-1h-2V7a2 2 0 0 0-2-2h-3V4a2 2 0 0 0-2-2zm-3 8a1.5 1.5 0 1 1 0 3 1.5 1.5 0 0 1 0-3zm6 0a1.5 1.5 0 1 1 0 3 1.5 1.5 0 0 1 0-3z"/></svg>'), auto;
         }
 
@@ -343,54 +343,6 @@
             letter-spacing: 1px;
         }
 
-        /* Bloque de Código de Ejemplo */
-        .code-box {
-            background: #030408;
-            border: 1px solid var(--border-color);
-            border-radius: 10px;
-            overflow: hidden;
-            box-shadow: 0 10px 30px rgba(0,0,0,0.6);
-        }
-
-        .code-header {
-            background: #0d1322;
-            padding: 12px 20px;
-            display: flex;
-            align-items: center;
-            justify-content: space-between;
-            border-bottom: 1px solid var(--border-color);
-            font-size: 0.85rem;
-            color: var(--text-muted);
-        }
-
-        .code-dots {
-            display: flex;
-            gap: 8px;
-        }
-
-        .code-dot {
-            width: 12px;
-            height: 12px;
-            border-radius: 50%;
-        }
-        .dot-red { background: #ef4444; }
-        .dot-yellow { background: #f59e0b; }
-        .dot-green { background: #10b981; }
-
-        .code-content {
-            padding: 25px;
-            overflow-x: auto;
-            font-family: 'Courier New', Courier, monospace;
-            font-size: 0.95rem;
-            color: #cbd5e1;
-            line-height: 1.6;
-        }
-
-        .keyword { color: #38bdf8; }
-        .string { color: #34d399; }
-        .function { color: #a78bfa; }
-        .comment { color: #64748b; font-style: italic; }
-
         /* Roadmap Timeline */
         .roadmap-timeline {
             position: relative;
@@ -470,7 +422,7 @@
     <!-- Canvas de partículas de fondo -->
     <canvas id="particle-canvas"></canvas>
 
-    <!-- Indicador flotante en la esquina inferior con el icono de Godot -->
+    <!-- Indicador flotante en la esquina inferior -->
     <div class="scroll-icon-floating" title="Desplázate hacia abajo para ver más">
         <svg width="26" height="26" viewBox="0 0 24 24" fill="#478cbf">
             <path d="M12 2a2 2 0 0 0-2 2v1H7a2 2 0 0 0-2 2v2H3a1 1 0 0 0-1 1v2a1 1 0 0 0 1 1h2v4a3 3 0 0 0 3 3h1v2a1 1 0 0 0 1 1h4a1 1 0 0 0 1-1v-2h1a3 3 0 0 0 3-3v-4h2a1 1 0 0 0 1-1v-2a1 1 0 0 0-1-1h-2V7a2 2 0 0 0-2-2h-3V4a2 2 0 0 0-2-2zm-3 8a1.5 1.5 0 1 1 0 3 1.5 1.5 0 0 1 0-3zm6 0a1.5 1.5 0 1 1 0 3 1.5 1.5 0 0 1 0-3z"/>
@@ -488,7 +440,6 @@
         <ul class="nav-links">
             <li><a href="#funciones">Funciones</a></li>
             <li><a href="#arquitectura">Arquitectura</a></li>
-            <li><a href="#codigo">Ejemplo</a></li>
             <li><a href="#roadmap">Roadmap</a></li>
         </ul>
     </nav>
@@ -497,7 +448,7 @@
     <header>
         <div class="studio-badge">Galaxy Byte Studios - Production</div>
         
-        <!-- Logo animado del robot Godot en SVG nativo -->
+        <!-- Logo animado en SVG nativo -->
         <div class="logo-container">
             <svg viewBox="0 0 128 128" width="100%" height="100%">
                 <g fill="#478cbf">
@@ -508,7 +459,7 @@
         </div>
 
         <h1>Galaxy Engine</h1>
-        <p class="subtitle">El motor de videojuegos definitivo de alto rendimiento para desarrolladores independientes. Compilado nativamente desde el núcleo con máxima eficiencia y optimización extrema.</p>
+        <p class="subtitle">El motor de videojuegos definitivo de alto rendimiento para desarrolladores independientes. Diseñado nativamente desde el núcleo con máxima eficiencia y optimización extrema.</p>
         
         <div class="hero-buttons">
             <a href="#funciones" class="btn btn-primary">Ver Características</a>
@@ -522,7 +473,7 @@
             <div class="specs-container">
                 <div class="spec-item">
                     <h3>100%</h3>
-                    <p>Nativo y Compilado</p>
+                    <p>Nativo y Optimizado</p>
                 </div>
                 <div class="spec-item">
                     <h3>0ms</h3>
@@ -585,48 +536,6 @@
             </div>
         </section>
 
-        <!-- Sección de Código -->
-        <section id="codigo">
-            <div class="section-header">
-                <h2>Sintaxis y Lógica Limpia</h2>
-                <p>Ejemplo de estructura de control de entidades dentro del ecosistema de Galaxy Engine.</p>
-            </div>
-
-            <div class="code-box">
-                <div class="code-header">
-                    <div class="code-dots">
-                        <div class="code-dot dot-red"></div>
-                        <div class="code-dot dot-yellow"></div>
-                        <div class="code-dot dot-green"></div>
-                    </div>
-                    <span>PlayerController.galaxy</span>
-                    <span>C++ / Scripting</span>
-                </div>
-                <div class="code-content">
-<span class="keyword">class</span> <span class="function">GalaxyPlayer</span> : <span class="keyword">public</span> CharacterBody2D {
-    <span class="keyword">private</span>:
-        <span class="keyword">float</span> speed = <span class="string">450.0f</span>;
-        <span class="keyword">float</span> jump_force = <span class="string">-800.0f</span>;
-
-    <span class="keyword">public</span>:
-        <span class="keyword">void</span> <span class="function">_physics_process</span>(<span class="keyword">float</span> delta) <span class="keyword">override</span> {
-            Vector2 velocity = <span class="function">get_velocity</span>();
-            
-            <span class="comment">// Control de movimiento horizontal fluido</span>
-            <span class="keyword">float</span> input_dir = Input.<span class="function">get_axis</span>(<span class="string">"ui_left"</span>, <span class="string">"ui_right"</span>);
-            <span class="keyword">if</span> (input_dir != <span class="string">0</span>) {
-                velocity.x = input_dir * speed;
-            } <span class="keyword">else</span> {
-                velocity.x = <span class="function">move_toward</span>(velocity.x, <span class="string">0</span>, speed * delta);
-            }
-
-            <span class="function">set_velocity</span>(velocity);
-            <span class="function">move_and_slide</span>();
-        }
-};</div>
-            </div>
-        </section>
-
         <!-- Roadmap -->
         <section id="roadmap">
             <div class="section-header">
@@ -637,8 +546,8 @@
             <div class="roadmap-timeline">
                 <div class="roadmap-item">
                     <span>Fase 1 — Completada (Octubre 2026)</span>
-                    <h3>Compilación del Core Base</h3>
-                    <p>Compilación exitosa del ejecutable principal del motor en entorno Windows x86_64, superando los límites de hardware y optimizando hilos de compilación SCons.</p>
+                    <h3>Lanzamiento del Core Base</h3>
+                    <p>Estreno exitoso del núcleo principal del motor en entorno Windows x86_64, superando los estándares de hardware y optimizando cada proceso interno.</p>
                 </div>
 
                 <div class="roadmap-item">
