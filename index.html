@@ -1,0 +1,729 @@
+# Galaxy-Engine-Motor-3d-2d-
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Galaxy Engine | Documentación Oficial y Sitio de Galaxy Byte Studios</title>
+    <style>
+        :root {
+            --bg-deep: #05070f;
+            --bg-card: #0b101f;
+            --bg-card-hover: #131b33;
+            --accent-blue: #478cbf;
+            --accent-glow: #6366f1;
+            --text-main: #f1f5f9;
+            --text-muted: #94a3b8;
+            --border-color: #1e293b;
+        }
+
+        /* Scrollbar personalizado estilo cyber */
+        ::-webkit-scrollbar {
+            width: 10px;
+        }
+        ::-webkit-scrollbar-track {
+            background: var(--bg-deep);
+        }
+        ::-webkit-scrollbar-thumb {
+            background: var(--accent-blue);
+            border-radius: 5px;
+        }
+        ::-webkit-scrollbar-thumb:hover {
+            background: var(--accent-glow);
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+            scroll-behavior: smooth;
+        }
+
+        body {
+            background-color: var(--bg-deep);
+            color: var(--text-main);
+            line-height: 1.7;
+            overflow-x: hidden;
+            position: relative;
+            /* Cursor personalizado con el robot de Godot */
+            cursor: url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="%23478cbf"><path d="M12 2a2 2 0 0 0-2 2v1H7a2 2 0 0 0-2 2v2H3a1 1 0 0 0-1 1v2a1 1 0 0 0 1 1h2v4a3 3 0 0 0 3 3h1v2a1 1 0 0 0 1 1h4a1 1 0 0 0 1-1v-2h1a3 3 0 0 0 3-3v-4h2a1 1 0 0 0 1-1v-2a1 1 0 0 0-1-1h-2V7a2 2 0 0 0-2-2h-3V4a2 2 0 0 0-2-2zm-3 8a1.5 1.5 0 1 1 0 3 1.5 1.5 0 0 1 0-3zm6 0a1.5 1.5 0 1 1 0 3 1.5 1.5 0 0 1 0-3z"/></svg>'), auto;
+        }
+
+        /* Canvas de fondo para partículas espaciales */
+        #particle-canvas {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            pointer-events: none;
+            z-index: 0;
+        }
+
+        /* Indicador flotante de scroll */
+        .scroll-icon-floating {
+            position: fixed;
+            bottom: 25px;
+            right: 25px;
+            width: 50px;
+            height: 50px;
+            background: var(--bg-card);
+            border: 2px solid var(--accent-blue);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            box-shadow: 0 0 20px rgba(71, 140, 191, 0.4);
+            z-index: 1000;
+            animation: floatBounce 2.5s infinite ease-in-out;
+            transition: transform 0.3s;
+        }
+        .scroll-icon-floating:hover {
+            transform: scale(1.1);
+        }
+
+        @keyframes floatBounce {
+            0%, 20%, 50%, 80%, 100% { transform: translateY(0); }
+            40% { transform: translateY(-10px); }
+            60% { transform: translateY(-5px); }
+        }
+
+        /* Navegación Superior */
+        nav {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            background: rgba(5, 7, 15, 0.85);
+            backdrop-filter: blur(10px);
+            border-bottom: 1px solid var(--border-color);
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 15px 40px;
+            z-index: 999;
+        }
+
+        .nav-logo {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            font-weight: bold;
+            font-size: 1.2rem;
+            color: var(--text-main);
+            text-decoration: none;
+        }
+
+        .nav-logo svg {
+            width: 32px;
+            height: 32px;
+        }
+
+        .nav-links {
+            display: flex;
+            gap: 25px;
+            list-style: none;
+        }
+
+        .nav-links a {
+            color: var(--text-muted);
+            text-decoration: none;
+            font-size: 0.95rem;
+            transition: color 0.3s;
+        }
+
+        .nav-links a:hover {
+            color: var(--accent-blue);
+        }
+
+        /* Header Principal / Hero Section */
+        header {
+            position: relative;
+            z-index: 1;
+            padding: 160px 20px 80px;
+            text-align: center;
+            background: radial-gradient(circle at center, rgba(71, 140, 191, 0.1) 0%, transparent 70%);
+        }
+
+        .studio-badge {
+            display: inline-block;
+            background: rgba(71, 140, 191, 0.1);
+            color: var(--accent-blue);
+            border: 1px solid rgba(71, 140, 191, 0.3);
+            padding: 6px 16px;
+            border-radius: 20px;
+            font-size: 0.85rem;
+            text-transform: uppercase;
+            letter-spacing: 2px;
+            margin-bottom: 20px;
+            box-shadow: 0 0 15px rgba(71, 140, 191, 0.2);
+        }
+
+        .logo-container {
+            width: 140px;
+            height: 140px;
+            margin: 0 auto 25px;
+            filter: drop-shadow(0 0 25px rgba(71, 140, 191, 0.6));
+            animation: pulseGlow 4s infinite alternate;
+        }
+
+        @keyframes pulseGlow {
+            0% { filter: drop-shadow(0 0 15px rgba(71, 140, 191, 0.4)); }
+            100% { filter: drop-shadow(0 0 30px rgba(99, 102, 241, 0.8)); }
+        }
+
+        h1 {
+            font-size: 3.5rem;
+            font-weight: 800;
+            background: linear-gradient(135deg, #ffffff 30%, var(--accent-blue) 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            margin-bottom: 15px;
+        }
+
+        .subtitle {
+            font-size: 1.25rem;
+            color: var(--text-muted);
+            max-width: 700px;
+            margin: 0 auto 35px;
+        }
+
+        .hero-buttons {
+            display: flex;
+            justify-content: center;
+            gap: 15px;
+            flex-wrap: wrap;
+        }
+
+        .btn {
+            display: inline-flex;
+            align-items: center;
+            gap: 10px;
+            padding: 14px 28px;
+            border-radius: 8px;
+            text-decoration: none;
+            font-weight: 600;
+            font-size: 1rem;
+            transition: all 0.3s ease;
+            cursor: pointer;
+        }
+
+        .btn-primary {
+            background: var(--accent-blue);
+            color: #ffffff;
+            box-shadow: 0 0 20px rgba(71, 140, 191, 0.4);
+        }
+
+        .btn-primary:hover {
+            background: #3b75a1;
+            box-shadow: 0 0 25px rgba(71, 140, 191, 0.7);
+            transform: translateY(-2px);
+        }
+
+        .btn-secondary {
+            background: var(--bg-card);
+            color: var(--text-main);
+            border: 1px solid var(--border-color);
+        }
+
+        .btn-secondary:hover {
+            background: var(--bg-card-hover);
+            border-color: var(--accent-blue);
+            transform: translateY(-2px);
+        }
+
+        /* Contenedor Principal */
+        main {
+            position: relative;
+            z-index: 1;
+            max-width: 1100px;
+            margin: 0 auto;
+            padding: 40px 20px;
+        }
+
+        section {
+            margin-bottom: 90px;
+        }
+
+        .section-header {
+            text-align: center;
+            margin-bottom: 50px;
+        }
+
+        .section-header h2 {
+            font-size: 2.3rem;
+            color: var(--text-main);
+            margin-bottom: 10px;
+        }
+
+        .section-header p {
+            color: var(--text-muted);
+            font-size: 1.05rem;
+        }
+
+        /* Grillas y Tarjetas */
+        .grid-3 {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
+            gap: 25px;
+        }
+
+        .card {
+            background: var(--bg-card);
+            border: 1px solid var(--border-color);
+            border-radius: 12px;
+            padding: 30px;
+            transition: all 0.3s ease;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .card::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 3px;
+            background: linear-gradient(90deg, var(--accent-blue), var(--accent-glow));
+            opacity: 0;
+            transition: opacity 0.3s;
+        }
+
+        .card:hover {
+            transform: translateY(-6px);
+            border-color: rgba(71, 140, 191, 0.5);
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.5);
+        }
+
+        .card:hover::before {
+            opacity: 1;
+        }
+
+        .card-icon {
+            font-size: 2.2rem;
+            margin-bottom: 20px;
+        }
+
+        .card h3 {
+            font-size: 1.35rem;
+            color: var(--text-main);
+            margin-bottom: 12px;
+        }
+
+        .card p {
+            color: var(--text-muted);
+            font-size: 0.95rem;
+        }
+
+        /* Sección de Estadísticas / Specs */
+        .specs-container {
+            background: var(--bg-card);
+            border: 1px solid var(--border-color);
+            border-radius: 16px;
+            padding: 40px;
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 30px;
+            text-align: center;
+        }
+
+        .spec-item h3 {
+            font-size: 2.5rem;
+            color: var(--accent-blue);
+            margin-bottom: 5px;
+            font-weight: 800;
+        }
+
+        .spec-item p {
+            color: var(--text-muted);
+            font-size: 0.95rem;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+        }
+
+        /* Bloque de Código de Ejemplo */
+        .code-box {
+            background: #030408;
+            border: 1px solid var(--border-color);
+            border-radius: 10px;
+            overflow: hidden;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.6);
+        }
+
+        .code-header {
+            background: #0d1322;
+            padding: 12px 20px;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            border-bottom: 1px solid var(--border-color);
+            font-size: 0.85rem;
+            color: var(--text-muted);
+        }
+
+        .code-dots {
+            display: flex;
+            gap: 8px;
+        }
+
+        .code-dot {
+            width: 12px;
+            height: 12px;
+            border-radius: 50%;
+        }
+        .dot-red { background: #ef4444; }
+        .dot-yellow { background: #f59e0b; }
+        .dot-green { background: #10b981; }
+
+        .code-content {
+            padding: 25px;
+            overflow-x: auto;
+            font-family: 'Courier New', Courier, monospace;
+            font-size: 0.95rem;
+            color: #cbd5e1;
+            line-height: 1.6;
+        }
+
+        .keyword { color: #38bdf8; }
+        .string { color: #34d399; }
+        .function { color: #a78bfa; }
+        .comment { color: #64748b; font-style: italic; }
+
+        /* Roadmap Timeline */
+        .roadmap-timeline {
+            position: relative;
+            max-width: 800px;
+            margin: 0 auto;
+            padding-left: 30px;
+            border-left: 2px solid var(--border-color);
+        }
+
+        .roadmap-item {
+            position: relative;
+            margin-bottom: 40px;
+        }
+
+        .roadmap-item::before {
+            content: '';
+            position: absolute;
+            left: -37px;
+            top: 5px;
+            width: 14px;
+            height: 14px;
+            border-radius: 50%;
+            background: var(--accent-blue);
+            box-shadow: 0 0 10px var(--accent-blue);
+        }
+
+        .roadmap-item h3 {
+            font-size: 1.2rem;
+            color: var(--text-main);
+            margin-bottom: 6px;
+        }
+
+        .roadmap-item span {
+            display: inline-block;
+            font-size: 0.8rem;
+            color: var(--accent-blue);
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            margin-bottom: 8px;
+        }
+
+        .roadmap-item p {
+            color: var(--text-muted);
+            font-size: 0.95rem;
+        }
+
+        /* Footer Moderno */
+        footer {
+            position: relative;
+            z-index: 1;
+            background: #030408;
+            border-top: 1px solid var(--border-color);
+            padding: 60px 20px 30px;
+            text-align: center;
+        }
+
+        .footer-content {
+            max-width: 800px;
+            margin: 0 auto 30px;
+        }
+
+        .footer-content p {
+            color: var(--text-muted);
+            margin-bottom: 20px;
+        }
+
+        .footer-bottom {
+            font-size: 0.85rem;
+            color: #64748b;
+            border-top: 1px solid rgba(30, 41, 59, 0.5);
+            padding-top: 25px;
+        }
+    </style>
+</head>
+<body>
+
+    <!-- Canvas de partículas de fondo -->
+    <canvas id="particle-canvas"></canvas>
+
+    <!-- Indicador flotante en la esquina inferior con el icono de Godot -->
+    <div class="scroll-icon-floating" title="Desplázate hacia abajo para ver más">
+        <svg width="26" height="26" viewBox="0 0 24 24" fill="#478cbf">
+            <path d="M12 2a2 2 0 0 0-2 2v1H7a2 2 0 0 0-2 2v2H3a1 1 0 0 0-1 1v2a1 1 0 0 0 1 1h2v4a3 3 0 0 0 3 3h1v2a1 1 0 0 0 1 1h4a1 1 0 0 0 1-1v-2h1a3 3 0 0 0 3-3v-4h2a1 1 0 0 0 1-1v-2a1 1 0 0 0-1-1h-2V7a2 2 0 0 0-2-2h-3V4a2 2 0 0 0-2-2zm-3 8a1.5 1.5 0 1 1 0 3 1.5 1.5 0 0 1 0-3zm6 0a1.5 1.5 0 1 1 0 3 1.5 1.5 0 0 1 0-3z"/>
+        </svg>
+    </div>
+
+    <!-- Barra de navegación -->
+    <nav>
+        <a href="#" class="nav-logo">
+            <svg viewBox="0 0 128 128" width="100%" height="100%">
+                <path d="M64 8a10 10 0 0 0-10 10v6H36a10 10 0 0 0-10 10v10H16a5 5 0 0 0-5 5v12a5 5 0 0 0 5 5h10v20a16 16 0 0 0 16 16h6v10a5 5 0 0 0 5 5h22a5 5 0 0 0 5-5v-10h6a16 16 0 0 0 16-16V66h10a5 5 0 0 0 5-5V49a5 5 0 0 0-5-5H102V34a10 10 0 0 0-10-10H74v-6A10 10 0 0 0 64 8zm-18 42a9 9 0 1 1 0 18 9 9 0 0 1 0-18zm36 0a9 9 0 1 1 0 18 9 9 0 0 1 0-18z" fill="#478cbf"/>
+            </svg>
+            Galaxy Engine
+        </a>
+        <ul class="nav-links">
+            <li><a href="#funciones">Funciones</a></li>
+            <li><a href="#arquitectura">Arquitectura</a></li>
+            <li><a href="#codigo">Ejemplo</a></li>
+            <li><a href="#roadmap">Roadmap</a></li>
+        </ul>
+    </nav>
+
+    <!-- Header / Hero Section -->
+    <header>
+        <div class="studio-badge">Galaxy Byte Studios - Production</div>
+        
+        <!-- Logo animado del robot Godot en SVG nativo -->
+        <div class="logo-container">
+            <svg viewBox="0 0 128 128" width="100%" height="100%">
+                <g fill="#478cbf">
+                    <path d="M64 8a10 10 0 0 0-10 10v6H36a10 10 0 0 0-10 10v10H16a5 5 0 0 0-5 5v12a5 5 0 0 0 5 5h10v20a16 16 0 0 0 16 16h6v10a5 5 0 0 0 5 5h22a5 5 0 0 0 5-5v-10h6a16 16 0 0 0 16-16V66h10a5 5 0 0 0 5-5V49a5 5 0 0 0-5-5H102V34a10 10 0 0 0-10-10H74v-6A10 10 0 0 0 64 8zm-18 42a9 9 0 1 1 0 18 9 9 0 0 1 0-18zm36 0a9 9 0 1 1 0 18 9 9 0 0 1 0-18z"/>
+                    <rect x="52" y="80" width="24" height="6" rx="3" fill="#05070f"/>
+                </g>
+            </svg>
+        </div>
+
+        <h1>Galaxy Engine</h1>
+        <p class="subtitle">El motor de videojuegos definitivo de alto rendimiento para desarrolladores independientes. Compilado nativamente desde el núcleo con máxima eficiencia y optimización extrema.</p>
+        
+        <div class="hero-buttons">
+            <a href="#funciones" class="btn btn-primary">Ver Características</a>
+            <a href="https://github.com" target="_blank" class="btn btn-secondary">Repositorio GitHub</a>
+        </div>
+    </header>
+
+    <main>
+        <!-- Estadísticas Técnicas -->
+        <section>
+            <div class="specs-container">
+                <div class="spec-item">
+                    <h3>100%</h3>
+                    <p>Nativo y Compilado</p>
+                </div>
+                <div class="spec-item">
+                    <h3>0ms</h3>
+                    <p>Bloqueo de Interfaz</p>
+                </div>
+                <div class="spec-item">
+                    <h3>60+</h3>
+                    <p>FPS Estables en 2D/3D</p>
+                </div>
+                <div class="spec-item">
+                    <h3>C++</h3>
+                    <p>Core de Alto Rendimiento</p>
+                </div>
+            </div>
+        </section>
+
+        <!-- Funciones del Motor -->
+        <section id="funciones">
+            <div class="section-header">
+                <h2>Funciones de Siguiente Generación</h2>
+                <p>Diseñado desde cero por Galaxy Byte Studios para ofrecer control absoluto del desarrollo.</p>
+            </div>
+
+            <div class="grid-3">
+                <div class="card">
+                    <div class="card-icon">⚡</div>
+                    <h3>Motor de Nodos Avanzado</h3>
+                    <p>Estructura de escena jerárquica ultrarrápida que permite herencia, composición limpia y gestión de estados sin sobrecarga de memoria.</p>
+                </div>
+
+                <div class="card">
+                    <div class="card-icon">🎮</div>
+                    <h3>Editor Integrado Nativo</h3>
+                    <p>Herramientas de inspección en tiempo real, gestor de recursos optimizado y diseñador de escenas fluido para Windows.</p>
+                </div>
+
+                <div class="card">
+                    <div class="card-icon">🚀</div>
+                    <h3>Físicas de Alta Precisión</h3>
+                    <p>Subsistema de colisiones 2D y detección de cuerpos rígidos con optimización matemática de ciclos de CPU.</p>
+                </div>
+
+                <div class="card">
+                    <div class="card-icon">🎨</div>
+                    <h3>Renderizado por Hardware</h3>
+                    <p>Pipeline gráfico optimizado para evitar cuellos de botella, compatible con shaders personalizados y efectos visuales retro/modernos.</p>
+                </div>
+
+                <div class="card">
+                    <div class="card-icon">🔊</div>
+                    <h3>Audio Posicional de Baja Latencia</h3>
+                    <p>Sistema de gestión de canales de audio multicanal diseñado para experiencias inmersivas y juegos de terror atmosférico.</p>
+                </div>
+
+                <div class="card">
+                    <div class="card-icon">📦</div>
+                    <h3>Exportación Limpia</h3>
+                    <p>Generación de ejecutables compactos listos para distribuir en itch.io, Steam o plataformas independientes sin dependencias basura.</p>
+                </div>
+            </div>
+        </section>
+
+        <!-- Sección de Código -->
+        <section id="codigo">
+            <div class="section-header">
+                <h2>Sintaxis y Lógica Limpia</h2>
+                <p>Ejemplo de estructura de control de entidades dentro del ecosistema de Galaxy Engine.</p>
+            </div>
+
+            <div class="code-box">
+                <div class="code-header">
+                    <div class="code-dots">
+                        <div class="code-dot dot-red"></div>
+                        <div class="code-dot dot-yellow"></div>
+                        <div class="code-dot dot-green"></div>
+                    </div>
+                    <span>PlayerController.galaxy</span>
+                    <span>C++ / Scripting</span>
+                </div>
+                <div class="code-content">
+<span class="keyword">class</span> <span class="function">GalaxyPlayer</span> : <span class="keyword">public</span> CharacterBody2D {
+    <span class="keyword">private</span>:
+        <span class="keyword">float</span> speed = <span class="string">450.0f</span>;
+        <span class="keyword">float</span> jump_force = <span class="string">-800.0f</span>;
+
+    <span class="keyword">public</span>:
+        <span class="keyword">void</span> <span class="function">_physics_process</span>(<span class="keyword">float</span> delta) <span class="keyword">override</span> {
+            Vector2 velocity = <span class="function">get_velocity</span>();
+            
+            <span class="comment">// Control de movimiento horizontal fluido</span>
+            <span class="keyword">float</span> input_dir = Input.<span class="function">get_axis</span>(<span class="string">"ui_left"</span>, <span class="string">"ui_right"</span>);
+            <span class="keyword">if</span> (input_dir != <span class="string">0</span>) {
+                velocity.x = input_dir * speed;
+            } <span class="keyword">else</span> {
+                velocity.x = <span class="function">move_toward</span>(velocity.x, <span class="string">0</span>, speed * delta);
+            }
+
+            <span class="function">set_velocity</span>(velocity);
+            <span class="function">move_and_slide</span>();
+        }
+};</div>
+            </div>
+        </section>
+
+        <!-- Roadmap -->
+        <section id="roadmap">
+            <div class="section-header">
+                <h2>Roadmap de Desarrollo</h2>
+                <p>El plan de evolución tecnológica trazado por Galaxy Byte Studios.</p>
+            </div>
+
+            <div class="roadmap-timeline">
+                <div class="roadmap-item">
+                    <span>Fase 1 — Completada (Octubre 2026)</span>
+                    <h3>Compilación del Core Base</h3>
+                    <p>Compilación exitosa del ejecutable principal del motor en entorno Windows x86_64, superando los límites de hardware y optimizando hilos de compilación SCons.</p>
+                </div>
+
+                <div class="roadmap-item">
+                    <span>Fase 2 — En Curso (Actual)</span>
+                    <h3>Diseño de Interfaz y Web Oficial</h3>
+                    <p>Despliegue del portal web en GitHub Pages (`Galaxy Engine`), documentación de APIs y estructuración de proyectos internos de prueba.</p>
+                </div>
+
+                <div class="roadmap-item">
+                    <span>Fase 3 — Próximamente</span>
+                    <h3>Lanzamiento del Primer Videojuego Oficial</h3>
+                    <p>Desarrollo y empaquetado del primer título comercial creado íntegramente utilizando Galaxy Engine bajo el sello de Galaxy Byte Studios.</p>
+                </div>
+            </div>
+        </section>
+    </main>
+
+    <!-- Footer -->
+    <footer>
+        <div class="footer-content">
+            <h3>Galaxy Byte Studios</h3>
+            <p>Construyendo herramientas de desarrollo independientes, potentes y libres de ataduras corporativas.</p>
+        </div>
+        <div class="footer-bottom">
+            <p>&copy; 2026 Galaxy Byte Studios & Galaxy Engine. Todos los derechos reservados.</p>
+        </div>
+    </footer>
+
+    <!-- Script de Partículas Espaciales en JavaScript Puro -->
+    <script>
+        const canvas = document.getElementById('particle-canvas');
+        const ctx = canvas.getContext('2d');
+
+        function resizeCanvas() {
+            canvas.width = window.innerWidth;
+            canvas.height = window.innerHeight;
+        }
+        window.addEventListener('resize', resizeCanvas);
+        resizeCanvas();
+
+        const particlesArray = [];
+        const numberOfParticles = 60;
+
+        class Particle {
+            constructor() {
+                this.x = Math.random() * canvas.width;
+                this.y = Math.random() * canvas.height;
+                this.size = Math.random() * 2 + 0.5;
+                this.speedX = (Math.random() - 0.5) * 0.3;
+                this.speedY = (Math.random() - 0.5) * 0.3;
+                this.opacity = Math.random() * 0.7 + 0.2;
+            }
+            update() {
+                this.x += this.speedX;
+                this.y += this.speedY;
+
+                if (this.x > canvas.width) this.x = 0;
+                if (this.x < 0) this.x = canvas.width;
+                if (this.y > canvas.height) this.y = 0;
+                if (this.y < 0) this.y = canvas.height;
+            }
+            draw() {
+                ctx.fillStyle = `rgba(71, 140, 191, ${this.opacity})`;
+                ctx.beginPath();
+                ctx.arc(this.x, this.y, this.size, 0, Math.PI * 2);
+                ctx.fill();
+            }
+        }
+
+        function initParticles() {
+            for (let i = 0; i < numberOfParticles; i++) {
+                particlesArray.push(new Particle());
+            }
+        }
+        initParticles();
+
+        function animateParticles() {
+            ctx.clearRect(0, 0, canvas.width, canvas.height);
+            particlesArray.forEach(particle => {
+                particle.update();
+                particle.draw();
+            });
+            requestAnimationFrame(animateParticles);
+        }
+        animateParticles();
+    </script>
+</body>
+</html>
